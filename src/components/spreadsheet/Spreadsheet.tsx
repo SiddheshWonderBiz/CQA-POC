@@ -1,6 +1,7 @@
 import GC from '@mescius/spread-sheets'
 import { SpreadSheets, Worksheet } from '@mescius/spread-sheets-react'
 import React, { useRef } from 'react'
+import SpreadsheetToolbar from './SpreadsheetToolbar'
 
 const Spreadsheet : React.FC = () => {
 
@@ -18,6 +19,7 @@ const Spreadsheet : React.FC = () => {
  }
   return (
     <div>
+        <SpreadsheetToolbar spread={spreadRef.current} />
         <SpreadSheets
             hostStyle={{ width: '100vw', height: '100vh' }}
             workbookInitialized={onInit}

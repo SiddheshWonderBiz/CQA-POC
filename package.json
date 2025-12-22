@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mescius/spread-excelio": "^19.0.0",
     "@mescius/spread-sheets": "^19.0.0",
     "@mescius/spread-sheets-react": "^19.0.0",
     "react": "^17.0.2",
