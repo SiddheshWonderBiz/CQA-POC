@@ -1,13 +1,9 @@
 import * as GC from "@mescius/spread-sheets";
-import "@mescius/spread-excelio";
+import '@mescius/spread-sheets-io';
 
-const excelIO = new GC.Spread.Excel.IO();
-
-/* EXPORT */
 export const exportToExcel = (spread: GC.Spread.Sheets.Workbook) => {
-  excelIO.save(
-    spread,
-    (blob: Blob) => {
+  spread.export(
+    (blob : any) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -15,25 +11,21 @@ export const exportToExcel = (spread: GC.Spread.Sheets.Workbook) => {
       a.click();
       URL.revokeObjectURL(url);
     },
-    (error) => {
-      console.error("Export error:", error);
-    }
-  );
+    (err  : any) => console.log(err),
+    { fileType : GC.Spread.Sheets.FileType.excel}
+  )
 };
 
-/* IMPORT */
-export const importFromExcel = (
-  spread: GC.Spread.Sheets.Workbook,
-  file: File
-) => {
-  excelIO.open(
-    file,
-    (json) => {
-      spread.fromJSON(json);
-      console.log("Import successful");
-    },
-    (error) => {
-      console.error("Import failed:", error);
-    }
-  );
-};
+
+export const importFromExcel = (spread : GC.Spread.Sheets.Workbook , file : File) => {
+    spread.import(
+      file,
+      () => {
+        console.log("Import successful");
+      },
+      (err : any) => {
+        console.log("Import failed: ", err);
+      }
+    );
+}
+
