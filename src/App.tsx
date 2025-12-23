@@ -1,10 +1,14 @@
-import Spreadsheet from "./components/spreadsheet/Spreadsheet"
+import Navbar from "./common/Navbar"
+
+import "./App.css"
+import CalculationSpreadsheet from "./components/spreadsheet/CalculationSpreadsheet"
 
 
 function App() {
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <Spreadsheet />
+    <div  >
+      <Navbar />
+      <CalculationSpreadsheet />
     </div>
   )
 }
