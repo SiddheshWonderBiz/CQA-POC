@@ -2,6 +2,7 @@ import GC from "@mescius/spread-sheets";
 import { SpreadSheets, Worksheet } from "@mescius/spread-sheets-react";
 import React from "react";
 import SpreadsheetToolbar from "./SpreadsheetToolbar";
+import '../../styles/Spreadsheet.css';
 
 const CalculationSpreadsheet: React.FC = () => {
   const [spread, setSpread] = React.useState<GC.Spread.Sheets.Workbook | null>(
@@ -93,9 +94,9 @@ const CalculationSpreadsheet: React.FC = () => {
   };
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div className="spread-container">
       <SpreadsheetToolbar spread={spread} />
-      <div style={{ flex: 1 }}>
+      <div className="spread-area">
         <SpreadSheets
           hostStyle={{ height: "600px" }}
           workbookInitialized={onInit}

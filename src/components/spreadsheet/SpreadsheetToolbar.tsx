@@ -27,63 +27,46 @@ const SpreadsheetToolbar: React.FC<Props> = ({ spread }) => {
   };
 
   return (
-    <div style={{ display: "flex", gap: 8, padding: 8 , alignItems: "center" }}>
+  <div className="right-toolbar">
+    <p className="toolbar-title">Import / Export</p>
 
-      <div style={{ display: "flex", flexDirection: "row" , alignItems: "center", gap: 8 }}>
-        <p>You can import JSON and Excel files.</p>
-        <input type="file" accept=".xlsx,.json" onChange={onImport} />
-      </div>
-      <div style={{ position: "relative" }}>
-        <button onClick={() => setOpen(!open)}>Export ▼</button>
+    <label className="import-btn">
+      Import
+      <input
+        type="file"
+        accept=".xlsx,.json"
+        onChange={onImport}
+        hidden
+      />
+    </label>
 
-        {open && (
+    <div className="export-wrapper">
+      <button
+        className="export-btn"
+        onClick={() => setOpen(!open)}
+      >
+        Export 
+      </button>
+
+      {open && (
+        <div className="export-menu">
           <div
-            style={{
-              position: "absolute",
-              top: "100%",
-              left: 0,
-              background: "#fff",
-              border: "1px solid #ccc",
-              boxShadow: "0 2px 6px rgba(0,0,0,.15)",
-              zIndex: 100,
-              minWidth: 160,
-            }}
+            className="menu-item"
+            onClick={() => exportToExcel(spread!)}
           >
-            <MenuItem
-              label="Export Excel (.xlsx)"
-              onClick={() => exportToExcel(spread!)}
-            />
-            <MenuItem
-              label="Export JSON (.json)"
-              onClick={() => exportToJson(spread!)}
-            />
-            
+            Export Excel (.xlsx)
           </div>
-        )}
-      </div>
+          <div
+            className="menu-item"
+            onClick={() => exportToJson(spread!)}
+          >
+            Export JSON (.json)
+          </div>
+        </div>
+      )}
     </div>
-  );
-};
-
-const MenuItem = ({
-  label,
-  onClick,
-}: {
-  label: string;
-  onClick: () => void;
-}) => (
-  <div
-    onClick={onClick}
-    style={{
-      padding: "8px 12px",
-      cursor: "pointer",
-      whiteSpace: "nowrap",
-    }}
-    onMouseEnter={(e) => (e.currentTarget.style.background = "#f5f5f5")}
-    onMouseLeave={(e) => (e.currentTarget.style.background = "#fff")}
-  >
-    {label}
   </div>
 );
 
+};
 export default SpreadsheetToolbar;

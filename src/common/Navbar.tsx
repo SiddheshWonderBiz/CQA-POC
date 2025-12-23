@@ -13,9 +13,8 @@ const Navbar = () => {
         gap: "12px",
       }}
     >
-      {/* Logo */}
       <img
-        src={logo} // place logo in public folder
+        src={logo} 
         alt="Logo"
         style={{
           height: "200px",
@@ -24,7 +23,6 @@ const Navbar = () => {
         }}
       />
 
-      {/* Text */}
       <span
         style={{
           color: "#ffffff",
