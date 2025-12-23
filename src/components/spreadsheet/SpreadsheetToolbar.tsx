@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import {
   exportToExcel,
   exportToJson,
-  exportToCSV,
+ 
   importFromExcel,
   importFromJson,
-  importFromCSV,
+
 } from "../../services/spreadsheet.service";
 
 interface Props {
@@ -24,15 +24,14 @@ const SpreadsheetToolbar: React.FC<Props> = ({ spread }) => {
 
     if (ext === "xlsx") importFromExcel(spread, file);
     else if (ext === "json") importFromJson(spread, file);
-    else if (ext === "csv") importFromCSV(spread, file);
   };
 
   return (
     <div style={{ display: "flex", gap: 8, padding: 8 , alignItems: "center" }}>
 
       <div style={{ display: "flex", flexDirection: "row" , alignItems: "center", gap: 8 }}>
-        <p>You can import JSON , CSV, and Excel files.</p>
-        <input type="file" accept=".xlsx,.json,.csv" onChange={onImport} />
+        <p>You can import JSON and Excel files.</p>
+        <input type="file" accept=".xlsx,.json" onChange={onImport} />
       </div>
       <div style={{ position: "relative" }}>
         <button onClick={() => setOpen(!open)}>Export ▼</button>
@@ -58,10 +57,7 @@ const SpreadsheetToolbar: React.FC<Props> = ({ spread }) => {
               label="Export JSON (.json)"
               onClick={() => exportToJson(spread!)}
             />
-            <MenuItem
-              label="Export CSV (.csv)"
-              onClick={() => exportToCSV(spread!)}
-            />
+            
           </div>
         )}
       </div>

@@ -3,7 +3,7 @@ import { SpreadSheets, Worksheet } from "@mescius/spread-sheets-react";
 import React from "react";
 import SpreadsheetToolbar from "./SpreadsheetToolbar";
 
-const Spreadsheet: React.FC = () => {
+const CalculationSpreadsheet: React.FC = () => {
   const [spread, setSpread] = React.useState<GC.Spread.Sheets.Workbook | null>(
     null
   );
@@ -59,28 +59,21 @@ const Spreadsheet: React.FC = () => {
       const r = i + 1;
       sheet.setFormula(r, 4, `=B${r + 1}*C${r + 1}`);
       sheet.setFormula(r, 6, `=E${r + 1}-F${r + 1}`);
-      sheet.setFormula(
-        r,
-        7,
-        `=MAX(0, G${r + 1}-(B${r + 1}*D${r + 1}))`
-      );
-      sheet.setFormula(
-        r,
-        8,
-        `=MAX(0, (B${r + 1}*D${r + 1})-G${r + 1})`
-      );
+      sheet.setFormula(r, 7, `=MAX(0, G${r + 1}-(B${r + 1}*D${r + 1}))`);
+      sheet.setFormula(r, 8, `=MAX(0, (B${r + 1}*D${r + 1})-G${r + 1})`);
     }
 
     // Locking
-    sheet.getRange(1, 0, items.length, 4).locked(false); // Editable
-    sheet.getRange(1, 4, items.length, 5).locked(true);  // Calculated
-
-    // 🔥 IMPORTANT: header MUST be unlocked
-    sheet.getRange(0, 0, 1, headers.length).locked(false);
+    sheet
+      .getRange(0, 0, sheet.getRowCount(), sheet.getColumnCount())
+      .locked(false);
+    sheet.getRange(1, 4, items.length, 1).locked(true); // Total Price
+    sheet.getRange(1, 6, items.length, 3).locked(true); // Net, Profit, Loss
 
     // Protection
     sheet.options.protectionOptions = {
       allowSelectLockedCells: false,
+      allowSelectUnlockedCells: true,
       allowResizeColumns: true,
       allowResizeRows: true,
       allowSort: true,
@@ -93,6 +86,10 @@ const Spreadsheet: React.FC = () => {
     for (let c = 0; c < headers.length; c++) {
       sheet.autoFitColumn(c);
     }
+
+    // setting blank sheet 1st
+    spread.addSheet(0, new GC.Spread.Sheets.Worksheet("Blank Sheet"));
+    spread.setActiveSheetIndex(0);
   };
 
   return (
@@ -100,7 +97,7 @@ const Spreadsheet: React.FC = () => {
       <SpreadsheetToolbar spread={spread} />
       <div style={{ flex: 1 }}>
         <SpreadSheets
-          hostStyle={{  height: "600px" }}
+          hostStyle={{ height: "600px" }}
           workbookInitialized={onInit}
         >
           <Worksheet />
@@ -110,4 +107,4 @@ const Spreadsheet: React.FC = () => {
   );
 };
 
-export default Spreadsheet;
+export default CalculationSpreadsheet;

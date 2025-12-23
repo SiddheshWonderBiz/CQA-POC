@@ -1,13 +1,14 @@
 import Navbar from "./common/Navbar"
-import Spreadsheet from "./components/spreadsheet/Spreadsheet"
+
 import "./App.css"
+import CalculationSpreadsheet from "./components/spreadsheet/CalculationSpreadsheet"
 
 
 function App() {
   return (
     <div  >
       <Navbar />
-      <Spreadsheet />
+      <CalculationSpreadsheet />
     </div>
   )
 }
