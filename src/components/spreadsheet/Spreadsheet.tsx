@@ -22,7 +22,7 @@ const Spreadsheet = () => {
     setupCalculationSheet(spread.getSheet(1)!);
 
     spread.addSheet(2, new GC.Spread.Sheets.Worksheet("Graph"));
-    setupGraphSheet(spread.getSheet(2)!);
+    setupGraphSheet(spread.getSheet(2)!, spread);
 
     spread.setActiveSheetIndex(0);
     spread.resumePaint();
