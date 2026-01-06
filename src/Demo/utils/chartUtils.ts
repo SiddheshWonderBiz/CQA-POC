@@ -26,6 +26,17 @@ export const rangeToA1 = (
   return start === end ? start : `${start}:${end}`;
 };
 
+const getXAfterTable = (
+  sheet: GC.Spread.Sheets.Worksheet,
+  endCol: number
+) => {
+  let x = 0;
+  for (let c = 0; c <= endCol; c++) {
+    x += sheet.getColumnWidth(c);
+  }
+  return x + 20;
+};
+
 export const createComparisonChart = (
   sheet: GC.Spread.Sheets.Worksheet,
   monthsCount: number,
@@ -38,14 +49,18 @@ export const createComparisonChart = (
   const oldChart = sheet.charts.get(chartName);
   if (oldChart) sheet.charts.remove(chartName);
 
-  // Helper column (hidden)
   const LEGEND_COL = sheet.getColumnCount() - 1;
+
+  // Calculate chart position
+  const tableEndCol = monthsCount;
+  const chartX = getXAfterTable(sheet, tableEndCol);
+  const chartY = table1StartRow * 22;
 
   const chart = sheet.charts.add(
     chartName,
     GC.Spread.Sheets.Charts.ChartType.line,
-    60,
-    (table2StartRow + table2ItemCount + 2) * 22,
+    chartX,
+    chartY,
     monthsCount * 100,
     320
   );
@@ -58,6 +73,7 @@ export const createComparisonChart = (
 
   let legendRow = 0;
 
+  // In Flow series
   for (let r = 0; r < table1ItemCount; r++) {
     const itemName = sheet.getValue(table1StartRow + r, 0);
 
@@ -73,6 +89,7 @@ export const createComparisonChart = (
     legendRow++;
   }
 
+  // Out Flow series
   for (let r = 0; r < table2ItemCount; r++) {
     const itemName = sheet.getValue(table2StartRow + r, 0);
 
@@ -88,5 +105,6 @@ export const createComparisonChart = (
     legendRow++;
   }
 
+  // Hide helper legend column
   sheet.setColumnVisible(LEGEND_COL, false);
 };

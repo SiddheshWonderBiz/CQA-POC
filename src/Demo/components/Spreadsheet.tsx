@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import * as GC from "@mescius/spread-sheets";
 import "@mescius/spread-sheets/styles/gc.spread.sheets.excel2013white.css";
 
-import { MONTHS, ITEMS, SELECTION_TYPES, SelectionType } from "../Data/constants";
+import { MONTHS, ITEMS} from "../Data/constants";
 import { createComparisonChart, rangeToA1 } from "../utils/chartUtils";
 
 interface Props {
@@ -16,7 +16,7 @@ const Spreadsheet: React.FC<Props> = ({ onInit }) => {
   const [startMonth, setStartMonth] = useState(MONTHS[0]);
   const [endMonth, setEndMonth] = useState(MONTHS[MONTHS.length - 1]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [selectionType, setSelectionType] = useState<SelectionType>("value");
+  // const [selectionType, setSelectionType] = useState<SelectionType>("value");
   const [itemsOpen, setItemsOpen] = useState(false);
 
   const getMonthIndex = (month: string) => MONTHS.indexOf(month);
@@ -64,7 +64,7 @@ const Spreadsheet: React.FC<Props> = ({ onInit }) => {
     const TABLE2_TOTAL = TABLE2_START + itemsCount;
 
     sheet.setRowCount(TABLE2_TOTAL + 20);
-    sheet.setColumnCount(monthsCount + 5);
+    sheet.setColumnCount(monthsCount + 20);
 
     sheet.setValue(TABLE1_HEADER, 0, "In Flow");
     monthsSelected.forEach((m, c) => {
@@ -129,13 +129,13 @@ const Spreadsheet: React.FC<Props> = ({ onInit }) => {
     sheet.options.isProtected = true;
 
     //For ref
-    sheet.bind(GC.Spread.Sheets.Events.DragFillBlock, (_s: any, args: { cancel: boolean }) => {
-      if (selectionType === "ref") args.cancel = true;
-    });
+    // sheet.bind(GC.Spread.Sheets.Events.DragFillBlock, (_s: any, args: { cancel: boolean }) => {
+    //   if (selectionType === "ref") args.cancel = true;
+    // });
 
-    sheet.bind(GC.Spread.Sheets.Events.ClipboardPasting, (_s: any, args: { cancel: boolean }) => {
-      if (selectionType === "ref") args.cancel = true;
-    });
+    // sheet.bind(GC.Spread.Sheets.Events.ClipboardPasting, (_s: any, args: { cancel: boolean }) => {
+    //   if (selectionType === "ref") args.cancel = true;
+    // });
 
     //chart
     const updateChart = () => {
@@ -194,7 +194,7 @@ const Spreadsheet: React.FC<Props> = ({ onInit }) => {
           )}
         </div>
 
-        <label style={{ marginLeft: 20 }}>
+        {/* <label style={{ marginLeft: 20 }}>
           Selection Type:
           <select
             value={selectionType}
@@ -202,7 +202,7 @@ const Spreadsheet: React.FC<Props> = ({ onInit }) => {
           >
             {SELECTION_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
           </select>
-        </label>
+        </label> */}
 
         <button style={{ marginLeft: 20 }} onClick={generateSheet}>Submit</button>
       </div>
