@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import * as GC from "@mescius/spread-sheets";
 import "@mescius/spread-sheets/styles/gc.spread.sheets.excel2013white.css";
+import "@mescius/spread-sheets-data-validation";
 
 import { MONTHS, ITEMS} from "../Data/constants";
 import { createComparisonChart, rangeToA1 } from "../utils/chartUtils";
@@ -112,11 +113,29 @@ const Spreadsheet: React.FC<Props> = ({ onInit }) => {
     });
 
     // Data Validation
-    const numberValidator = GC.Spread.Sheets.DataValidation.createNumberValidator(0, 99999, true);
+    spread.options.highlightInvalidData = true;
+    var numberValidator = GC.Spread.Sheets.DataValidation.createTextLengthValidator
+    (GC.Spread.Sheets.ConditionalFormatting.ComparisonOperators.lessThanOrEqualsTo, 5);
+    numberValidator.showInputMessage(true);
+    numberValidator.inputMessage("Enter a value greater than 0.");
+    numberValidator.inputTitle("Tip");
+    numberValidator.showErrorMessage(true);
+    numberValidator.errorMessage("Incorrect Value");
     numberValidator.errorMessage("Enter a number between 0 and 99999");
 
     sheet.setDataValidator(TABLE1_START, 1, itemsCount, monthsCount, numberValidator);
     sheet.setDataValidator(TABLE2_START, 1, itemsCount, monthsCount, numberValidator);
+
+    sheet.bind(GC.Spread.Sheets.Events.ValidationError, function 
+      (_sender: any, args: { validator: { showErrorMessage: () => any; errorMessage: () => string | undefined; }; validationResult: GC.Spread.Sheets.DataValidation.DataValidationResult; }) {
+      if (args.validator.showErrorMessage()) {
+          if (confirm(args.validator.errorMessage())) {
+              args.validationResult = GC.Spread.Sheets.DataValidation.DataValidationResult.retry;
+          } else {
+              args.validationResult = GC.Spread.Sheets.DataValidation.DataValidationResult.forceApply;
+          }
+      }
+    });
 
 
     sheet.frozenRowCount(1);

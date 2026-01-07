@@ -13,6 +13,7 @@
     "@mescius/spread-excelio": "^19.0.0",
     "@mescius/spread-sheets": "^19.0.0",
     "@mescius/spread-sheets-charts": "^19.0.0",
+    "@mescius/spread-sheets-data-validation": "^19.0.1",
     "@mescius/spread-sheets-designer": "^19.0.0",
     "@mescius/spread-sheets-designer-react": "^19.0.0",
     "@mescius/spread-sheets-designer-resources-en": "^19.0.0",
