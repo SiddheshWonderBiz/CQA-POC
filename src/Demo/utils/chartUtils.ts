@@ -62,7 +62,8 @@ export const createComparisonChart = (
     chartX,
     chartY,
     monthsCount * 100,
-    320
+    320,
+    
   );
 
   chart.title({ text: "In Flow vs Out Flow Comparison" });

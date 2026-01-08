@@ -2,7 +2,8 @@ import Navbar from "./common/Navbar"
 import "./App.css"
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Spreadsheet from "./Demo/components/Spreadsheet";
+import DemoSpreadsheet from "./Demo/components/DemoSpreadsheet";
+import  Spreadsheet  from "./components/spreadsheet/Spreadsheet";
 
 const App: React.FC = () => {
   return (
@@ -11,7 +12,8 @@ const App: React.FC = () => {
       <div className="content">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Spreadsheet />} />
+            <Route path="/" element={<DemoSpreadsheet />} />
+            <Route path="/import" element = {<Spreadsheet/>}/>
           </Routes>
         </BrowserRouter>
       </div>

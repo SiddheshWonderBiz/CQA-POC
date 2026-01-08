@@ -1,0 +1,118 @@
+/* Root container */
+.spreadsheet-page {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f7f9f8;
+  padding: 20px;
+}
+
+/* Controls bar */
+.spreadsheet-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 15px 20px;
+  background-color: #ffffff;
+  border: 1px solid #e1e5e3;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+/* Labels */
+.spreadsheet-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 13px;
+  color: #333;
+}
+
+.spreadsheet-field label {
+  margin-bottom: 4px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+/* Dropdowns */
+.spreadsheet-field select {
+  padding: 6px 10px;
+  border: 1px solid #cfd6d2;
+  border-radius: 4px;
+  font-size: 13px;
+  min-width: 140px;
+}
+
+.spreadsheet-field select:focus {
+  outline: none;
+  border-color: #3dcd58;
+}
+
+/* Items dropdown */
+.items-wrapper {
+  position: relative;
+}
+
+.items-button {
+  padding: 7px 14px;
+  border: 1px solid #3dcd58;
+  background-color: #ffffff;
+  color: #2b7a3f;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.items-button:hover {
+  background-color: #f0faf3;
+}
+
+/* Items dropdown panel */
+.items-dropdown {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  width: 180px;
+  background-color: #ffffff;
+  border: 1px solid #cfd6d2;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 20;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.items-dropdown label {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.items-dropdown input {
+  margin-right: 8px;
+}
+
+/* Submit button */
+.submit-button {
+  padding: 8px 18px;
+  background-color: #3dcd58;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #35b24d;
+}
+
+/* Spreadsheet container */
+.spreadsheet-container {
+  width: 100%;
+  height: 600px;
+  background-color: #ffffff;
+  border: 1px solid #d6ddd9;
+  border-radius: 6px;
+}
