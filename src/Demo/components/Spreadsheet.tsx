@@ -115,7 +115,7 @@ const Spreadsheet: React.FC<Props> = ({ onInit }) => {
     // Data Validation
     spread.options.highlightInvalidData = true;
     var numberValidator = GC.Spread.Sheets.DataValidation.createTextLengthValidator
-    (GC.Spread.Sheets.ConditionalFormatting.ComparisonOperators.lessThanOrEqualsTo, 5);
+    (GC.Spread.Sheets.ConditionalFormatting.ComparisonOperators.lessThanOrEqualsTo, 3);
     numberValidator.showInputMessage(true);
     numberValidator.inputMessage("Enter a value greater than 0.");
     numberValidator.inputTitle("Tip");
@@ -127,7 +127,8 @@ const Spreadsheet: React.FC<Props> = ({ onInit }) => {
     sheet.setDataValidator(TABLE2_START, 1, itemsCount, monthsCount, numberValidator);
 
     sheet.bind(GC.Spread.Sheets.Events.ValidationError, function 
-      (_sender: any, args: { validator: { showErrorMessage: () => any; errorMessage: () => string | undefined; }; validationResult: GC.Spread.Sheets.DataValidation.DataValidationResult; }) {
+      (_sender: any, args: { validator: { showErrorMessage: () => any; errorMessage: () => string | undefined; }; 
+      validationResult: GC.Spread.Sheets.DataValidation.DataValidationResult; }) {
       if (args.validator.showErrorMessage()) {
           if (confirm(args.validator.errorMessage())) {
               args.validationResult = GC.Spread.Sheets.DataValidation.DataValidationResult.retry;
@@ -176,56 +177,60 @@ const Spreadsheet: React.FC<Props> = ({ onInit }) => {
 
   return (
     <div>
-      <div style={{ marginBottom: 20 }}>
-        <label>
-          Start Month:
-          <select value={startMonth} onChange={e => setStartMonth(e.target.value)}>
-            {MONTHS.map(m => <option key={m}>{m}</option>)}
-          </select>
-        </label>
+      <div style={{ padding: "5px 10px", marginBottom: 24, marginTop: 16, display: "flex", alignItems: "center", gap: 14,
+        flexWrap: "wrap",}}>
+        <div style={{ padding: "10px 18px", fontSize: 15, fontWeight: 600, cursor: "pointer", borderRadius: 8, 
+          border: "1px solid #4CAF50", color: "#0c0c0cff", }}>
+          <label>
+            Start Month: 
+            <select value={startMonth} onChange={e => setStartMonth(e.target.value)}>
+              {MONTHS.map(m => <option key={m}>{m}</option>)}
+            </select>
+          </label>
 
-        <label style={{ marginLeft: 20 }}>
-          End Month:
-          <select value={endMonth} onChange={e => setEndMonth(e.target.value)}>
-            {MONTHS.map(m => <option key={m}>{m}</option>)}
-          </select>
-        </label>
+          <label style={{ marginLeft: 20 }}>
+            End Month: 
+            <select value={endMonth} onChange={e => setEndMonth(e.target.value)}>
+              {MONTHS.map(m => <option key={m}>{m}</option>)}
+            </select>
+          </label>
 
-        <div style={{ display: "inline-block", marginLeft: 20 }}>
-          <button onClick={() => setItemsOpen(!itemsOpen)}>Items {itemsOpen ? "▲" : "▼"}</button>
-          {itemsOpen && (
-            <div style={{
-              border: "1px solid #ccc",
-              padding: 10,
-              background: "#fff",
-              position: "absolute",
-              zIndex: 10,
-            }}>
-              {ITEMS.map(item => (
-                <label key={item} style={{ display: "block" }}>
-                  <input type="checkbox"
-                    checked={selectedItems.includes(item)}
-                    onChange={() => toggleItem(item)}
-                  /> {item}
-                </label>
-              ))}
-            </div>
-          )}
+          <div style={{ display: "inline-block", marginLeft: 20 }}>
+            <button onClick={() => setItemsOpen(!itemsOpen)}>Items {itemsOpen ? "▲" : "▼"}</button>
+            {itemsOpen && (
+              <div style={{
+                border: "1px solid #ccc",
+                padding: 10,
+                background: "#fff",
+                position: "absolute",
+                zIndex: 10,
+              }}>
+                {ITEMS.map(item => (
+                  <label key={item} style={{ display: "block" }}>
+                    <input type="checkbox"
+                      checked={selectedItems.includes(item)}
+                      onChange={() => toggleItem(item)}
+                    /> {item}
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* <label style={{ marginLeft: 20 }}>
+            Selection Type:
+            <select
+              value={selectionType}
+              onChange={e => setSelectionType(e.target.value as SelectionType)}
+            >
+              {SELECTION_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+            </select>
+          </label> */}
+
+          <button style={{borderRadius: 5, backgroundColor: "#3dcd58", padding: "6px 12px", fontSize: 14, marginLeft: 20 }} 
+          onClick={generateSheet}>Submit</button>
         </div>
-
-        {/* <label style={{ marginLeft: 20 }}>
-          Selection Type:
-          <select
-            value={selectionType}
-            onChange={e => setSelectionType(e.target.value as SelectionType)}
-          >
-            {SELECTION_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
-          </select>
-        </label> */}
-
-        <button style={{ marginLeft: 20 }} onClick={generateSheet}>Submit</button>
       </div>
-
       <div ref={containerRef} style={{ width: "100%", height: "600px", border: "1px solid #ccc" }} />
     </div>
   );
